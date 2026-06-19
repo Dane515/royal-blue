@@ -344,6 +344,608 @@
                             <span class="text-slate-500">10分钟前</span>
                         </div>
                         <p class="text-white text-xs leading-relaxed">刚刚在 Royal Blue 看完了《豪门逆袭》的大结局，反转太精彩了！免广告看剧体验极度舒适，绝对值回票价！</p>
+                        <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🎭 多幕古典剧场 - 哈姆雷特 · 玩偶之家 · 雷雨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: #2a1e1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Georgia', 'Times New Roman', '宋体', serif;
+            padding: 20px;
+        }
+
+        /* 主舞台容器 */
+        .theatre {
+            position: relative;
+            width: 950px;
+            max-width: 100%;
+            background: #1e1410;
+            border-radius: 32px 32px 24px 24px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,215,150,0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        /* 舞台内部区域 */
+        .stage {
+            position: relative;
+            background: radial-gradient(circle at 30% 20%, #3e2a24, #1f1511);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px 80px 20px;
+            border-bottom: 6px solid #b87c4f;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
+        }
+
+        /* 左右幕布 */
+        .curtain {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background: linear-gradient(135deg, #8b3c2c, #5c1e12);
+            background-image: repeating-linear-gradient(90deg, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 2px, transparent 2px, transparent 8px);
+            box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+            z-index: 10;
+        }
+
+        .curtain.left {
+            left: 0;
+            transform: translateX(0);
+            border-right: 2px solid #e9b47e;
+        }
+
+        .curtain.right {
+            right: 0;
+            transform: translateX(0);
+            border-left: 2px solid #e9b47e;
+        }
+
+        /* 幕布拉开的状态 */
+        .theatre.curtain-open .curtain.left {
+            transform: translateX(-100%);
+        }
+        .theatre.curtain-open .curtain.right {
+            transform: translateX(100%);
+        }
+
+        /* 多幕剧控制栏 */
+        .act-selector {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            background: #2c1d17;
+            padding: 12px 20px;
+            border-bottom: 2px solid #b87c4f;
+            flex-wrap: wrap;
+            z-index: 5;
+            position: relative;
+        }
+
+        .act-btn {
+            background: #422c24;
+            border: none;
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 8px 24px;
+            border-radius: 40px;
+            color: #e2c6a9;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .act-btn.active {
+            background: #c28a5c;
+            color: #2c1a14;
+            box-shadow: 0 0 8px #ffcd94;
+            text-shadow: none;
+        }
+
+        .act-btn:hover:not(.active) {
+            background: #6b4a38;
+            color: #ffefcf;
+            transform: translateY(-2px);
+        }
+
+        /* 舞台角色区域 (角色卡片) */
+        .characters {
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .character-card {
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            filter: grayscale(0.3);
+        }
+
+        .character-card.active {
+            opacity: 1;
+            filter: grayscale(0);
+            transform: translateY(-8px);
+            text-shadow: 0 0 6px gold;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: #d9bc8b;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            background: linear-gradient(145deg, #f3dfb2, #c8a56e);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+            border: 2px solid #ffdfaa;
+        }
+
+        .character-name {
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            color: #ffefcf;
+            background: #2f1f18b3;
+            padding: 4px 12px;
+            border-radius: 30px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 台词区域 */
+        .dialogue-box {
+            background: #221a15e6;
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            margin: 20px 30px 30px;
+            padding: 20px 30px;
+            border: 1px solid #dbb87c;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,245,200,0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .speaker {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #ffd8a9;
+            border-left: 5px solid #e0a878;
+            padding-left: 18px;
+            margin-bottom: 12px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .line-text {
+            font-size: 1.35rem;
+            line-height: 1.5;
+            color: #fef0dd;
+            min-height: 4rem;
+            font-style: italic;
+            padding: 0 8px;
+        }
+
+        /* 控制台 */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0 30px;
+            background: #2c1d17;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #64422e;
+            border: none;
+            font-size: 1.2rem;
+            font-family: 'Georgia', serif;
+            padding: 10px 28px;
+            border-radius: 40px;
+            color: #ffefcf;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 3px 6px black;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #8f5e44;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px black;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .info-tip {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #a67b5b;
+            background: #1f1612;
+            padding: 8px;
+            font-style: italic;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stage > * {
+            animation: fadeSlide 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<div class="theatre" id="theatre">
+    <!-- 幕布 -->
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+
+    <!-- 多幕剧切换栏 -->
+    <div class="act-selector" id="actSelector">
+        <button class="act-btn" data-act="act1">🎭 第一幕 · 哈姆雷特</button>
+        <button class="act-btn" data-act="act2">🏠 第二幕 · 玩偶之家</button>
+        <button class="act-btn" data-act="act3">🌩️ 第三幕 · 雷雨</button>
+    </div>
+
+    <div class="stage">
+        <div class="characters" id="charactersContainer"></div>
+
+        <div class="dialogue-box">
+            <div class="speaker" id="speaker">🎭 剧场待启</div>
+            <div class="line-text" id="lineText">请选择一幕，拉开红幕开启戏剧之旅</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="curtainBtn">🎬 开幕 / 谢幕</button>
+        <button id="nextBtn">➡️ 下一句台词</button>
+        <button id="resetActBtn">🔄 重头开始</button>
+    </div>
+    <div class="info-tip">✨ 多幕经典 · 幕布拉开后点击台词推进 | 切换剧幕将自动重置进度并合上幕布</div>
+</div>
+
+<script>
+    // ======================= 多幕剧剧本库 ======================= 
+    // 第一幕: 哈姆雷特
+    const scriptAct1 = [
+        { charKey: "hamlet", name: "哈姆雷特", line: "生存还是毁灭，这是一个值得考虑的问题。" },
+        { charKey: "hamlet", name: "哈姆雷特", line: "默然忍受命运的暴虐毒箭，或是挺身反抗人世的无涯苦难，这两种行为，哪一种更高贵？" },
+        { charKey: "ophelia", name: "奥菲莉亚", line: "我的好殿下，您这几天来贵体安好吗？" },
+        { charKey: "hamlet", name: "哈姆雷特", line: "谢谢你，很好，很好，很好。" },
+        { charKey: "king", name: "克劳狄斯", line: "他的疯狂，像是一座隐伏着危机的火山，我们必须小心看管。" },
+        { charKey: "ophelia", name: "奥菲莉亚", line: "哦，一颗多么高贵的心就这样陨落了！" },
+        { charKey: "hamlet", name: "哈姆雷特", line: "软弱，你的名字是女人！" },
+        { charKey: "hamlet", name: "哈姆雷特", line: "这是一个颠倒混乱的时代，唉，倒霉的我却要负起重整乾坤的责任！" }
+    ];
+    // 第一幕的角色配置 (data-char 需要与剧本 charKey 匹配)
+    const charactersAct1 = [
+        { key: "hamlet", name: "哈姆雷特", emoji: "👑" },
+        { key: "ophelia", name: "奥菲莉亚", emoji: "🌼" },
+        { key: "king", name: "克劳狄斯", emoji: "⚜️" }
+    ];
+
+    // 第二幕: 玩偶之家 (易卜生)
+    const scriptAct2 = [
+        { charKey: "nora", name: "娜拉", line: "托伐，这儿真舒服，真快乐！" },
+        { charKey: "torvald", name: "托伐", line: "我的小云雀儿，你这么说，那真是我的幸福。" },
+        { charKey: "nora", name: "娜拉", line: "我真希望……我真的希望我能继承一些你的优点。" },
+        { charKey: "krogstad", name: "柯洛克斯泰", line: "海尔茂太太，我想跟你单独说几句话。" },
+        { charKey: "nora", name: "娜拉", line: "你想说什么？我不觉得我们之间有什么需要单独说的。" },
+        { charKey: "torvald", name: "托伐", line: "娜拉，你太孩子气了，你不懂得这世界的复杂。" },
+        { charKey: "nora", name: "娜拉", line: "不，我已经开始明白，我必须学会认识我自己。" },
+        { charKey: "nora", name: "娜拉", line: "首先我是一个人，跟你一样的一个人——至少我要学做一个人。" }
+    ];
+    const charactersAct2 = [
+        { key: "nora", name: "娜拉", emoji: "🐦" },
+        { key: "torvald", name: "托伐", emoji: "👔" },
+        { key: "krogstad", name: "柯洛克斯泰", emoji: "📜" }
+    ];
+
+    // 第三幕: 雷雨 (曹禺)
+    const scriptAct3 = [
+        { charKey: "zhou_puting", name: "周朴园", line: "你是谁？你怎么进来的？" },
+        { charKey: "shi_ping", name: "侍萍", line: "朴园，你还记得三十年前在无锡的这件事吗？" },
+        { charKey: "zhou_puting", name: "周朴园", line: "你是谁？你到底是谁？" },
+        { charKey: "shi_ping", name: "侍萍", line: "我是侍萍，三十年前被你抛弃的侍萍！" },
+        { charKey: "zhou_puting", name: "周朴园", line: "你——你来干什么？谁指示你来的？" },
+        { charKey: "shi_ping", name: "侍萍", line: "命，不公平的命指使我来的。" },
+        { charKey: "feng", name: "蘩漪", line: "我盼望这一次风暴之后，一切都会有一个了结。" },
+        { charKey: "chong", name: "周冲", line: "我忽然觉得……我们一家人好像都是在一个大雷雨里。" }
+    ];
+    const charactersAct3 = [
+        { key: "zhou_puting", name: "周朴园", emoji: "🏛️" },
+        { key: "shi_ping", name: "侍萍", emoji: "🌧️" },
+        { key: "feng", name: "蘩漪", emoji: "⚡" },
+        { key: "chong", name: "周冲", emoji: "🌊" }
+    ];
+
+    // 定义所有幕
+    const ACTS = {
+        act1: {
+            name: "第一幕",
+            script: scriptAct1,
+            characters: charactersAct1
+        },
+        act2: {
+            name: "第二幕",
+            script: scriptAct2,
+            characters: charactersAct2
+        },
+        act3: {
+            name: "第三幕",
+            script: scriptAct3,
+            characters: charactersAct3
+        }
+    };
+
+    // DOM 元素
+    const theatreEl = document.getElementById('theatre');
+    const curtainBtn = document.getElementById('curtainBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const resetActBtn = document.getElementById('resetActBtn');
+    const speakerEl = document.getElementById('speaker');
+    const lineTextEl = document.getElementById('lineText');
+    const charactersContainer = document.getElementById('charactersContainer');
+    const actBtns = document.querySelectorAll('.act-btn');
+
+    // 状态变量
+    let currentAct = 'act1';            // 当前幕次
+    let isCurtainOpen = false;          // 幕布是否拉开
+    let currentLineIndex = 0;           // 当前已展示台词句数 (下一句的索引)
+    let isPlayStarted = false;           // 戏剧是否已经开始
+
+    // 辅助: 获取当前幕的剧本和角色
+    function getCurrentScript() {
+        return ACTS[currentAct].script;
+    }
+    function getCurrentCharacters() {
+        return ACTS[currentAct].characters;
+    }
+
+    // 渲染角色卡片 (根据当前幕)
+    function renderCharacters() {
+        const chars = getCurrentCharacters();
+        charactersContainer.innerHTML = '';
+        chars.forEach(char => {
+            const card = document.createElement('div');
+            card.className = 'character-card';
+            card.setAttribute('data-char', char.key);
+            card.innerHTML = `
+                <div class="avatar">${char.emoji}</div>
+                <div class="character-name">${char.name}</div>
+            `;
+            charactersContainer.appendChild(card);
+        });
+        // 清除高亮
+        highlightCharacter(null);
+    }
+
+    // 高亮当前角色
+    function highlightCharacter(charKey) {
+        document.querySelectorAll('.character-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        if (charKey) {
+            const targetCard = document.querySelector(`.character-card[data-char="${charKey}"]`);
+            if (targetCard) targetCard.classList.add('active');
+        }
+    }
+
+    // 显示指定索引的台词
+    function showLine(index) {
+        const script = getCurrentScript();
+        if (index < 0 || index >= script.length) {
+            lineTextEl.innerHTML = "—— 幕终 —— 感谢观赏，可切换其他剧幕 ——";
+            speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 剧终`;
+            highlightCharacter(null);
+            return false;
+        }
+        const lineObj = script[index];
+        speakerEl.innerHTML = `🎭 ${lineObj.name}`;
+        lineTextEl.innerHTML = `“ ${lineObj.line} ”`;
+        highlightCharacter(lineObj.charKey);
+        return true;
+    }
+
+    // 重置当前幕的演出进度（不改变幕布状态）
+    function resetCurrentActProgress() {
+        currentLineIndex = 0;
+        isPlayStarted = false;
+        const script = getCurrentScript();
+        if (isCurtainOpen) {
+            if (script.length > 0) {
+                showLine(0);
+                currentLineIndex = 1;
+                isPlayStarted = true;
+            } else {
+                speakerEl.innerHTML = "🎭 剧场待启";
+                lineTextEl.innerHTML = "请拉开帷幕";
+            }
+        } else {
+            speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 待开幕`;
+            lineTextEl.innerHTML = "请点击「开幕/谢幕」拉开红幕";
+            highlightCharacter(null);
+        }
+    }
+
+    // 完整重置当前幕：重置进度并保证如果幕布开着就从头演，如果幕布关着就待开幕。
+    function resetAct() {
+        currentLineIndex = 0;
+        isPlayStarted = false;
+        if (isCurtainOpen) {
+            const script = getCurrentScript();
+            if (script.length > 0) {
+                showLine(0);
+                currentLineIndex = 1;
+                isPlayStarted = true;
+            } else {
+                speakerEl.innerHTML = "🎭 空剧本";
+                lineTextEl.innerHTML = "此幕没有台词";
+            }
+        } else {
+            speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 待开幕`;
+            lineTextEl.innerHTML = "请点击「开幕/谢幕」拉开红幕，再按「下一句」";
+            highlightCharacter(null);
+        }
+    }
+
+    // 下一句台词逻辑
+    function nextLine() {
+        if (!isCurtainOpen) {
+            lineTextEl.innerHTML = "🔴 幕布尚未拉开，无法演出！请先点击「开幕/谢幕」";
+            speakerEl.innerHTML = "⚠️ 舞台提示";
+            return;
+        }
+        const script = getCurrentScript();
+        if (!isPlayStarted) {
+            if (script.length > 0) {
+                showLine(0);
+                currentLineIndex = 1;
+                isPlayStarted = true;
+            } else {
+                lineTextEl.innerHTML = "剧本为空，无法演出。";
+            }
+            return;
+        }
+        if (currentLineIndex < script.length) {
+            showLine(currentLineIndex);
+            currentLineIndex++;
+        } else {
+            lineTextEl.innerHTML = "🎭 全幕终。可按「重头开始」再次欣赏，或切换其他剧幕。";
+            speakerEl.innerHTML = "📜 终章";
+        }
+    }
+
+    // 开幕/谢幕 切换幕布 + 重置逻辑以匹配新状态
+    function toggleCurtain() {
+        if (!isCurtainOpen) {
+            // 开幕
+            theatreEl.classList.add('curtain-open');
+            isCurtainOpen = true;
+            curtainBtn.innerHTML = "🎬 谢幕 (合上幕布)";
+            // 开幕时重置演出进度，从第一句开始
+            currentLineIndex = 0;
+            const script = getCurrentScript();
+            if (script.length > 0) {
+                showLine(0);
+                currentLineIndex = 1;
+                isPlayStarted = true;
+            } else {
+                speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 空幕`;
+                lineTextEl.innerHTML = "没有录入台词，请切换剧幕。";
+                isPlayStarted = false;
+            }
+        } else {
+            // 谢幕：合上幕布
+            theatreEl.classList.remove('curtain-open');
+            isCurtainOpen = false;
+            curtainBtn.innerHTML = "🎬 开幕 (拉开幕布)";
+            isPlayStarted = false;
+            currentLineIndex = 0;
+            speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 幕布已合`;
+            lineTextEl.innerHTML = "感谢观赏，戏剧暂歇。再次开幕将重新开始。";
+            highlightCharacter(null);
+        }
+    }
+
+    // 切换幕次
+    function switchAct(actId) {
+        if (currentAct === actId) return;
+        // 更新按钮样式
+        actBtns.forEach(btn => {
+            if (btn.getAttribute('data-act') === actId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        // 保存旧幕布状态，切换后会合上幕布并重置所有状态
+        const wasCurtainOpen = isCurtainOpen;
+        // 如果幕布是拉开的，先合上（为了体验干净切换）
+        if (wasCurtainOpen) {
+            theatreEl.classList.remove('curtain-open');
+            isCurtainOpen = false;
+            curtainBtn.innerHTML = "🎬 开幕 (拉开幕布)";
+        }
+        // 更新当前幕次
+        currentAct = actId;
+        // 重新渲染角色卡片
+        renderCharacters();
+        // 重置内部状态
+        currentLineIndex = 0;
+        isPlayStarted = false;
+        // 更新提示信息
+        speakerEl.innerHTML = `🎭 ${ACTS[currentAct].name} · 待开幕`;
+        lineTextEl.innerHTML = `已切换至「${ACTS[currentAct].name}」，请拉开红幕开启戏剧。`;
+        highlightCharacter(null);
+        // 不需要额外重新存储别的
+    }
+
+    // 事件绑定
+    curtainBtn.addEventListener('click', toggleCurtain);
+    nextBtn.addEventListener('click', nextLine);
+    resetActBtn.addEventListener('click', resetAct);
+    
+    // 为所有幕次按钮绑定事件
+    actBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const actId = btn.getAttribute('data-act');
+            if (actId) switchAct(actId);
+        });
+    });
+
+    // 初始化：渲染第一幕角色，保证舞台清洁，幕布关闭
+    renderCharacters();
+    theatreEl.classList.remove('curtain-open');
+    isCurtainOpen = false;
+    curtainBtn.innerHTML = "🎬 开幕 (拉开幕布)";
+    speakerEl.innerHTML = "🎭 第一幕 · 待开幕";
+    lineTextEl.innerHTML = "请点击「开幕/谢幕」拉开红幕，再按「下一句」欣赏戏剧。点击上方可切换世界经典剧幕。";
+    highlightCharacter(null);
+    currentLineIndex = 0;
+    isPlayStarted = false;
+    // 默认高亮第一幕按钮
+    document.querySelector('.act-btn[data-act="act1"]').classList.add('active');
+</script>
+</body>
+</html>
                     </div>
                 </div>
             </div>
